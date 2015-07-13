@@ -12,7 +12,7 @@ exports.question = function(req, res)
 exports.answer = function(req, res)
           {
             if ("Roma".localeCompare(req.query.respuesta,'es'
-											, {usage: 'search', sensitivity: 'base' }) == 0)
+			, {usage: 'search', sensitivity: 'base' }) == 0)
             //if(req.query.respuesta === 'Roma')
               res.render('quizes/answer', {respuesta: 'CORRECTO'});
             else
