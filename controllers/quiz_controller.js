@@ -18,3 +18,9 @@ exports.answer = function(req, res)
             else
               res.render('quizes/answer', {respuesta: 'INCORRECTO'});
           }
+
+//GET /quizes/author
+exports.authors = function(req, res)
+          {
+            res.render('creditos', {autores: 'Mario Francisco Tojar Trujillo'});
+          }
