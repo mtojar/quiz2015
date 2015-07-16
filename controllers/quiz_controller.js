@@ -6,7 +6,7 @@ var models = require('../models/models.js');
 //modificado para buscar las preguntas en la base de datos
 exports.question = function(req, res)
           {
-            models.Quiz.findAll().success(function(quiz)
+            models.Quiz.findAll().then(function(quiz)
                     {
                       res.render('quizes/question', {pregunta:quiz[0].pregunta})
                     })
@@ -19,12 +19,13 @@ exports.question = function(req, res)
 //buscamos la solución en la base de datos
 exports.answer = function(req, res)
           {
-            models.Quiz.findAll().success(function(quiz)
+            models.Quiz.findAll().then(function(quiz)
                     {
-                      console.log("Resultado con localeCompare: " 
-                          + quiz[0].localeCompare(req.query.respuesta,'es', {usage: 'search', sensitivity: 'base' }) );
+                      console.log("Resultado con localeCompare: " + 
+                          quiz[0].respuesta.localeCompare(req.query.respuesta,'es', {usage: 'search', sensitivity: 'base' }) );
 
-                      if(req.query.respuesta === quiz[0].respuesta) //modificar esto con localeCompare
+                      if(quiz[0].respuesta.localeCompare(req.query.respuesta,'es', 
+                                {usage: 'search', sensitivity: 'base' }) == 0) 
                         res.render('quizes/answer', {respuesta: 'CORRECTO'});
                       else
                         res.render('quizes/answer', {respuesta: 'INCORRECTO'});

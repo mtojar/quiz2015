@@ -26,11 +26,11 @@ sequelize.sync().success(function()
 											Quiz.create({
 													pregunta: 'Capital de Italia',
 													respuesta: 'Roma'
-												});
-											/*.sucess(function()
+												})
+												.then(function()
 														{
 															console.log('Base de Datos Inicializada');
-														});*/
-										};
+														});
+										} else console.log("HAY DATOS");
 									});
 				});
