@@ -15,15 +15,11 @@ exports.question = function(req, res)
 
 //GET /quizes/answer
 //notese que la parte del path "answer" coincide con la función a exportar
-//y quizes/answer es el path de las vista
-//buscamos la solución en la base de datos
+//y quizes/answer es el path de las vista ->  buscamos la solución en la base de datos
 exports.answer = function(req, res)
           {
             models.Quiz.findAll().then(function(quiz)
                     {
-                      console.log("Resultado con localeCompare: " + 
-                          quiz[0].respuesta.localeCompare(req.query.respuesta,'es', {usage: 'search', sensitivity: 'base' }) );
-
                       if(quiz[0].respuesta.localeCompare(req.query.respuesta,'es', 
                                 {usage: 'search', sensitivity: 'base' }) == 0) 
                         res.render('quizes/answer', {respuesta: 'CORRECTO'});
@@ -31,15 +27,6 @@ exports.answer = function(req, res)
                         res.render('quizes/answer', {respuesta: 'INCORRECTO'});
                     })
           };
-/*            
-            if ("Roma".localeCompare(req.query.respuesta,'es'
-			, {usage: 'search', sensitivity: 'base' }) == 0)
-            //if(req.query.respuesta === 'Roma')
-              res.render('quizes/answer', {respuesta: 'CORRECTO'});
-            else
-              res.render('quizes/answer', {respuesta: 'INCORRECTO'});
-          }
-*/
 
 //GET /quizes/author
 exports.authors = function(req, res)
