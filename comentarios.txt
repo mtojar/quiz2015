@@ -1,0 +1,9 @@
+Problemas encontrados:
+la utilización de success da error, hay que usar then para más información mirar:
+	http://wiki.commonjs.org/wiki/Promises/A
+	http://stackoverflow.com/questions/26817057/sequelize-associations-please-use-promise-style-instead
+
+Problemas con foreman:
+	Primero usar powershell
+	La instalación hacerla en un directorio sin espacios
+	desinstalar la versión de foreman y usar esta gem install foreman -v 0.61
