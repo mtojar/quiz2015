@@ -8,8 +8,11 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
 
-router.get('/quizes/question', quizController.question);
-router.get('/quizes/answer', quizController.answer);
-router.get('/authors', quizController.authors);
+//Definición de rutas de /quizes. \\+d significa que tiene que tener 1 o más decimales
+router.get('/quizes',							quizController.index);
+router.get('/quizes/:quizId(\\d+)', 			quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer', 		quizController.answer);
+
+router.get('/authors',				quizController.authors);
 
 module.exports = router;
