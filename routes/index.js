@@ -3,10 +3,13 @@ var router = express.Router();
 
 var quizController = require('../controllers/quiz_controller.js');
 
-/* GET home page. */
+/* GET Página de entrada. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
+
+// Autoload de comandos :quizId, tiene que ir antes de los controladores para ejecutarse primero
+router.param('quizId', quizController.load);
 
 //Definición de rutas de /quizes. \\+d significa que tiene que tener 1 o más decimales
 router.get('/quizes',							quizController.index);
