@@ -14,6 +14,7 @@ var host 		= (url[4]||null);
 var storage		= process.env.DATABASE_STORAGE;
 
 console.log("storage: " + storage);
+
 //cargamos Modelo ORM
 var Sequelize = require('sequelize');
 
@@ -52,5 +53,5 @@ sequelize.sync().then(function()
 												})									
 											.then(function() {console.log('Base de Datos Inicializada');});
 										} 
-									});
-				});
+									}).catch(function(err){consolo.log("Error al contar: " + err);});
+				}).catch(function(err) {console.log("Error al sincronizar: " + err); console.log("url: " + url)});
