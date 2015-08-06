@@ -1,0 +1,9 @@
+<h3>Estamos jugando a Quiz</h3>
+<p>Puede seleccionar las preguntas e intentar acertarlas, tiene infinitas posibilidades</p>
+<table>
+  <% var i; for (i=0; i < quizes.length; i++) { %>        
+    <tr align="left">
+      <td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+    </tr>
+  <% } %>
+</table>    
