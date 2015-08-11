@@ -38,7 +38,7 @@ exports.index=function(req, res)
             	models.Quiz.findAll().then(function(quizes)
                 	{
                     	res.render('quizes/index.ejs', {quizes:quizes} );
-                  	}).catch(function(error){ next(error); })
+                  }).catch(function(error){ next(error); })
         	}
           };
 
@@ -59,6 +59,27 @@ exports.answer = function(req, res)
 				resultado = "CORRECTO";
 			res.render('quizes/answer', {quiz:req.quiz, respuesta: resultado});
           };          
+
+//GET /quizes/new
+exports.new = function(req, res)
+          {
+            //creamos un objeto quiz
+            var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
+
+            res.render('quizes/new', {quiz:quiz});
+          };
+
+//POST /quizes/create
+exports.create = function(req, res)
+          {
+            var quiz = models.Quiz.build( req.body.quiz );
+
+            //guardamos en la bs los campso pregunta y respuesta de quiz
+            quiz.save( {fields: ["pregunta", "respuesta"]} ).then(function()
+                {
+                  res.redirect('/quizes'); //redireccón HTTP (URL relativo) lista de preguntas
+                }).catch(function(error){ next(error); } );
+          };
 
 
 //GET /quizes/author
