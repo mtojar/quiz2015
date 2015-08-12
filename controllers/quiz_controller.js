@@ -30,14 +30,14 @@ exports.index=function(req, res)
           						{
           							res.render('quizes/mensajes', {
           										estilo:"color:#F00; font-size:12px; font-style:italic;text-transform:capitalize", 
-          										mensaje:"No existen consultas con el dato "+req.query.search});
+          										mensaje:"No existen consultas con el dato "+req.query.search, errors:[]});
           						}
           					}).catch(function(error){ next(error); } );
           	} else
           	{
             	models.Quiz.findAll().then(function(quizes)
                 	{
-                    	res.render('quizes/index.ejs', {quizes:quizes} );
+                    	res.render('quizes/index.ejs', {quizes:quizes, errors:[]} );
                   }).catch(function(error){ next(error); })
         	}
           };
@@ -46,18 +46,18 @@ exports.index=function(req, res)
 //ya hemos preguntado por la pregunta en load
 exports.show = function(req, res)
           {
-            res.render('quizes/show', {quiz: req.quiz});
+            res.render('quizes/show', {quiz: req.quiz, errors:[]});
           };
 
 //GET /quizes/:id/answer
 //la pregunta nos viene dada por req.quiz
 exports.answer = function(req, res)
           {
-          	var resultado = "INCORRECTO";
-			if(req.quiz.respuesta.localeCompare(req.query.respuesta,'es', 
+          	 var resultado = "INCORRECTO";
+			       if(req.quiz.respuesta.localeCompare(req.query.respuesta,'es', 
                                 {usage: 'search', sensitivity: 'base' }) == 0) 
-				resultado = "CORRECTO";
-			res.render('quizes/answer', {quiz:req.quiz, respuesta: resultado});
+				        resultado = "CORRECTO";
+			       res.render('quizes/answer', {quiz:req.quiz, respuesta: resultado, errors:[]});
           };          
 
 //GET /quizes/new
@@ -66,7 +66,7 @@ exports.new = function(req, res)
             //creamos un objeto quiz
             var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
 
-            res.render('quizes/new', {quiz:quiz});
+            res.render('quizes/new', {quiz:quiz, errors:[]});
           };
 
 //POST /quizes/create
@@ -74,16 +74,26 @@ exports.create = function(req, res)
           {
             var quiz = models.Quiz.build( req.body.quiz );
 
-            //guardamos en la bs los campso pregunta y respuesta de quiz
-            quiz.save( {fields: ["pregunta", "respuesta"]} ).then(function()
-                {
-                  res.redirect('/quizes'); //redireccón HTTP (URL relativo) lista de preguntas
-                }).catch(function(error){ next(error); } );
+            // guardamos en la bd los campos pregunta y respuesta de quiz pero primero contralamos si existe algún error
+            // es decir, si alguno de ellos está vacio
+            quiz
+              .validate()
+                .then( function(err)
+                    {
+                      if (err) { res.render('quizes/new', {quiz:quiz, errors:err.errors});}
+                      else 
+                      {
+                        //save: guarda en la BD los campos pregunta y respuesta de quiz
+                        //redireccón HTTP (URL relativo) lista de preguntas
+                        quiz.save( {fields: ["pregunta", "respuesta"]} ).then(function()
+                              { res.redirect('/quizes'); });
+                      }
+                });
           };
 
 
 //GET /quizes/author
 exports.authors = function(req, res)
           {
-            res.render('creditos', {autores: 'Mario Francisco Tojar Trujillo'});
+            res.render('creditos', {autores: 'Mario Francisco Tojar Trujillo', errors: []});
           };
