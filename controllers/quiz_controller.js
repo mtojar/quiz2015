@@ -15,7 +15,7 @@ exports.load = function(req, res, next, quizId)
 		  };
 
 //GET /quizes
-exports.index=function(req, res) 
+exports.index=function(req, res, next) 
           {
           	if(req.query.search)
           	{
@@ -28,9 +28,11 @@ exports.index=function(req, res)
           							res.render('quizes/index', {quizes:quizes, errros: []});
           						else 
           						{
-          							res.render('quizes/mensajes', {
-          										estilo:"color:#F00; font-size:12px; font-style:italic;text-transform:capitalize", 
-          										mensaje:"No existen consultas con el dato "+req.query.search, errors:[]});
+                        var err = new Error('No existen consultas con el dato ' + req.query.search);
+                        err.status = (err.status || 500);
+                        err.stack = "quiz_controllers -> exports.index -> models.Quiz.findAll({where: [\"pregunta like ?\", \"%\"+"
+                              + req.query.search+"\"%\"]";
+                        next(err);
           						}
           					}).catch(function(error){ next(error); } );
           	} else
@@ -64,7 +66,7 @@ exports.answer = function(req, res)
 exports.new = function(req, res)
           {
             //creamos un objeto quiz
-            var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
+            var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta", tema: "Tema"});
 
             res.render('quizes/new', {quiz:quiz, errors:[]});
           };
@@ -85,7 +87,7 @@ exports.create = function(req, res)
                       {
                         //save: guarda en la BD los campos pregunta y respuesta de quiz
                         //redireccón HTTP (URL relativo) lista de preguntas
-                        quiz.save( {fields: ["pregunta", "respuesta"]} ).then(function()
+                        quiz.save( {fields: ["pregunta", "respuesta", "tema"]} ).then(function()
                               { res.redirect('/quizes'); });
                       }
                 });
@@ -118,7 +120,7 @@ exports.update = function(req, res)
           };
 
 //DELETE /quizes/:id
-exports.destroy = function(req, res)
+exports.destroy = function(req, res, next)
           {
             req.quiz.destroy()
               .then( 
