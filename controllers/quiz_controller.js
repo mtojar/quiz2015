@@ -25,7 +25,7 @@ exports.index=function(req, res, next)
           			}).then(function(quizes)
           					{
           						if(quizes.length != 0)
-          							res.render('quizes/index', {quizes:quizes, errros: []});
+          							res.render('quizes/index', {quizes:quizes, errors: []});
           						else 
           						{
                         var err = new Error('No existen consultas con el dato ' + req.query.search);
