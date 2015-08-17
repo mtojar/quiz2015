@@ -3,7 +3,11 @@ var models = require('../models/models.js');
 // Autoload - factoriza el código si la ruta incluye :quizId
 exports.load = function(req, res, next, quizId)
 		  {
-		  	models.Quiz.find(quizId).then(function(quiz)
+		  	models.Quiz.find(
+          {
+            where: {id: Number(quizId) },
+            include: [{ model: models.Comment }]
+          }).then(function(quiz)
 		  		{
 		  			if(quiz)
 		  			{
@@ -14,15 +18,22 @@ exports.load = function(req, res, next, quizId)
 		  	).catch(function(error){ next(error);});
 		  };
 
+
 //GET /quizes
 exports.index=function(req, res, next) 
           {
           	if(req.query.search)
           	{
-          		//res.render('quizes/tem.ejs', {search: req.query.search});
+          		/* Antes
+              //res.render('quizes/tem.ejs', {search: req.query.search});
           		models.Quiz.findAll({
           				where: ["pregunta like ?", "%"+req.query.search+"%"]
           			}).then(function(quizes)
+              */
+              var objSearch = {};              
+              var search = "%" + req.query.search + "%";
+              objSearch = {where:["pregunta like ?", search.replace(/\s+/g, '%')]};              
+              models.Quiz.findAll(objSearch).then(function(quizes)
           					{
           						if(quizes.length != 0)
           							res.render('quizes/index', {quizes:quizes, errors: []});
