@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 // Lo quitamos var users = require('./routes/users');
@@ -23,10 +24,30 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('Quiz 2015'));
+app.use(session({
+    secret: "cookie_secret",
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-console.log(path.join(__dirname, 'public'));
+
+// Helpers dinámicos:
+app.use(function(req,res,next) {
+
+        //guardamos path en session.redir para después de login
+        if (!req.path.match(/\/login|\/logout/))
+        {
+            //console.log("req.path (app.js)": req.path);
+            req.session.redir = req.path;
+            //console.log("req.session.redir (app.js)": req.session.redir);
+        }
+
+        //Hacemos visible req.session para poder usarla en las vistas
+        res.locals.session = req.session;
+        next();
+    });
 
 app.use('/', routes);
 //también lo quitamos app.use('/users', users);
