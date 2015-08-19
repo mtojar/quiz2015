@@ -1,3 +1,17 @@
+// MW de autorización de accesos HTTP restringidos
+exports.loginRequired = function(req, res, next)
+			{
+	// preguntamos por req.session.user por que es esta propiedad la que creamos cuando nos autenticamos login
+	// en caso contrario la propiedad no existe, también se destruye cuando hacemo logout
+				if(req.session.user)
+				{
+					next();
+				} else {
+					res.redirect('/login');
+				}
+			};
+
+
 // Get /login -- Formulario de login
 exports.new = function(req,res,next)
 			{

@@ -5,16 +5,20 @@
   		<% var i; for (i=0; i < quizes.length; i++) { %>        
     		<tr align="left">
       		<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
-      		<td><a href="/quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
-      		<td>
-      			<form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
-      				<button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');"> borrar </button>
-      			</form>
-      		</td>
+          <% if(session.user) { %>
+      		  <td><a href="/quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
+      		  <td>
+              <form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
+          				<button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');"> borrar </but
+      			  </form>
+      		  </td>
+          <% } %>
     		</tr>
   		<% } %>
 	</table>
-	<a href="/quizes/new"><button type="button">Crear Pregunta</button></a>    
+  <% if(session.user) { %>
+	   <a href="/quizes/new"><button type="button">Crear Pregunta</button></a>
+  <% } %>
 </div>
 <div style="float:left; margin-left:40%; width=45%; overflow:auto; height=125px;">
 	<h4>BUSQUE SUS PROPIAS PREGUNTAS</h4>
