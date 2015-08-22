@@ -13,6 +13,9 @@ router.get('/', function(req, res) {
 // Autoload de comandos :quizId, tiene que ir antes de los controladores para ejecutarse primero
 router.param('quizId', quizController.load);
 
+//Autoload de comandos :coomentId, tiene que ir antes de los controladores para ejecutarse primero
+router.param('commentId', commentController.load);
+
 //Definición de rutas de sesión
 router.get('/login',	sessionController.new);		// formulario de login
 router.post('/login',	sessionController.create);	// crear sesión
@@ -32,7 +35,10 @@ router.delete('/quizes/:quizId(\\d+)', 			sessionController.loginRequired, quizC
 //instancia el formulario de crear comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new',	commentController.new);
 //guarda el comentario en la tabla comment de la bd y redirecciona a la vista con la lista de preguntas
-router.post('/quizes/:quizId(\\d+)/comments',		commentController.create);	
+router.post('/quizes/:quizId(\\d+)/comments',		commentController.create);
+//esto tiene que ponerse put modificamos el registro de los comentarios para publicarlos
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',
+				sessionController.loginRequired, commentController.publish);
 
 router.get('/authors',				quizController.authors);
 
