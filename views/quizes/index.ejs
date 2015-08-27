@@ -1,5 +1,11 @@
 <h3>Estamos jugando a Quiz</h3>
 <p>Puede seleccionar las preguntas e intentar acertarlas, tiene infinitas posibilidades</p>
+<div style="float:right; width:100%; paddig-left:50%; height=45px; padding:2px; background-color:#E3FBE9">
+  <form action="get" action="/quizes" >
+    <input type="text" name="search" value="Texto a buscar" size="50" maxlength="75" />
+      <input type="submit" value="Busqueda por Pregunta" />
+  </form>  
+</div>
 <div style="float:left; width=45%; overflow:auto; height=125px;">
 	<table>
   		<% var i; for (i=0; i < quizes.length; i++) { %>        
@@ -21,9 +27,5 @@
   <% } %>
 </div>
 <div style="float:left; margin-left:40%; width=45%; overflow:auto; height=125px;">
-	<h4>BUSQUE SUS PROPIAS PREGUNTAS</h4>
-	<form acton="get" action="/quizes">
-		<input type="text" name="search" value="Texto a buscar" />
-  		<input type="submit" value="Enviar" />
-	</form>  
+
 </div>

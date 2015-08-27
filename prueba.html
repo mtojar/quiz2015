@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8"><title> Preguntas </title>
+		<link rel='stylesheet' type="text/css" href='./public//stylesheets/style.css' />
+		<link rel='stylesheet' type="text/css" 
+				media="only screen and (min-width: 530px) and (min-device-width: 481px)" 
+				href='./public//stylesheets/wide.css'/>
+		<link rel='stylesheet' type="text/css" 
+				media="only screen and (max-width: 480px)" 
+				href='./public//stylesheets/smartphone.css'/>				
+	</head>
+
+	<body>
+		<div id="page-wrap">
+			<header class="main" id="h1">
+				<h2>Quiz: el juego de las preguntas</h2>
+			</header>
+
+			<nav class="main" id="n1" role="navigation">
+				<span><a href="/">Principal</a></span>
+				<span><a href="/quizes">Preguntas</a></span>
+				<span><a href="/authors">Autores</a></span>
+			</nav>
+
+			<section class="main" id="s1">
+				<div>
+					<div style="width:100%; height=45px; background-color:#E3FBE9">
+  							<form action="get" action="/quizes" style="margin-left:50%">
+    							<input type="text" name="search" value="Texto a buscar" size="50" maxlength="75" />
+      							<input type="submit" value="Busqueda por Pregunta" />
+  							</form>  
+					</div>
+
+					<div style="float:left; width=45%; overflow:auto; height=125px;">
+						<table>
+    						<tr align="left">
+    							<td><a href="/quizes/1">Capital de Italia</a></td>
+    							<td><a href="/quizes/1/edit"><button>editar</button></a></td>
+    							<td>
+              						<form method="post" action="quizes/1?_method=delete">
+          								<button type="submit" onClick="return confirm('Borrar: Capital de Italia"> borrar </button>
+      			  					</form>
+      		  					</td>
+    						</tr>
+    						<tr align="left">
+    							<td><a href="/quizes/2">Capital de Portugal</a></td>
+    							<td><a href="/quizes/2/edit"><button>editar</button></a></td>
+    							<td>
+              						<form method="post" action="quizes/2?_method=delete">
+          								<button type="submit" onClick="return confirm('Borrar: Capital de Portugal"> borrar </button>
+      			  					</form>
+      		  					</td>    							
+    						</tr>
+    					</table>
+    					<a href="/quizes/new"><button type="button">Crear Pregunta</button></a>
+					</div>
+				</div>
+			</section>
+
+			<footer class="main" id="f1">
+				<a target="_blank" href="https://github.com/mtojar/quiz2015">P&aacute;gina Git del proyecto</a>
+			</footer>
+		</div>
+	</body>
+</html>
