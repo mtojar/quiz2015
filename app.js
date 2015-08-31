@@ -52,16 +52,10 @@ app.use(function(req,res,next) {
 app.use(function(req, res, next) {
     if(req.session.user)    //comprobamos si se ha comenzado la sesión
     {
-
         var now = new Date();   //hora actual
-        console.log("hora actual: " + now)
         var last = new Date(req.session.user.date); //hora de inicio de la session
-        console.log("ultima petición al servidor: " + last);
-
-console.log("tipo de variable last: " + typeof(last));
-console.log("tipo de variable nos: " + typeof(now));
         var time = now - last;  //diferencia
-        console.log("diferencia: " + time);
+
         if (time > 120000)  //ha expirado el tiempo superior a 2 minutos si hacer nada expira la sesión
         {
             delete req.session.user;
