@@ -25,6 +25,7 @@ body
 section > div
 {
 	padding: 20px;
+	background-color: yellow;
 }
 
 header, nav, section, footer
