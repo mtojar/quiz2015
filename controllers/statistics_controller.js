@@ -26,12 +26,12 @@ exports.calculate = function(req, res, next)
 				.then(function(numNoPublished)
 				{
 					dataStatistics.numComentariosNoPublicados = numNoPublished;
-					return models.Comment.countNoCommentedQuizes();
+					return models.Comment.countCommentedQuizes();
 				})
-				.then(function(numQuizesNoCommented)
+				.then(function(numQuizesCommented)
 				{
-					dataStatistics.numQuizesNoCommentados = numQuizesNoCommented;
-					dataStatistics.numQuizesComentados = dataStatistics.numQuizes - dataStatistics.numQuizesNoCommentados;
+					dataStatistics.numQuizesComentados = numQuizesCommented;
+					dataStatistics.numQuizesNoComentados = dataStatistics.numQuizes - dataStatistics.numQuizesComentados;
 				})
 			.catch(function(error){errors.push(error); next(error); })
 			.finally( function(){ next(); } );

@@ -23,12 +23,10 @@ module.exports = function(sequelize, DataTypes)
 								 * con la función aggregate no permite ejecutar una función segundo termino
 								 * con la condición en tercer término y del campo especicificado en el primer 
 								 * termino.
-								 * Seria cuentame el campo QuizId en aquellos casos que sean distintos, 
-								 * es decir aquellos quizes que no tengan comentarios,  quizid que no esten en 
-								 * Comment
+								 * Seria cuentame el campo QuizId en aquellos quizes que tengan comentarios,
+								 * quizid que esten en Comment
 								 */
-								countNoCommentedQuizes: function(){
-									console.log("'QuizId', 'count', {distinct: false}");
+								countCommentedQuizes: function(){
 									return this.aggregate('QuizId', 'count', {distinct: true});
 								}
 							}
